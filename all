@@ -587,3 +587,165 @@ bin_cluster <- factor(kmeans_result$cluster)
 results <- data.frame(Price=prices, EqualFreq=bin_ef, 
                       EqualWidth=bin_ew, Cluster=bin_cluster)
 print(results)
+
+#-------------------------------------------------------------------------------------------------------------------- 
+2. Employee Clustering using K-Means (Problem 2)
+EmployeeID,Gender,Age,Salary,Credit
+111,Male,28,150000,39
+222,Male,25,150000,27
+333,Female,26,160000,42
+444,Female,25,160000,40
+555,Female,30,170000,64
+666,Male,29,200000,72
+
+Weka Steps:
+
+Load CSV file
+
+Select "Cluster" tab
+
+Choose "SimpleKMeans"
+
+Set numClusters=3 (or experiment with different values)
+
+Select attributes: Salary and Credit
+
+Run clustering
+
+Visualize results
+
+Right-click result in list → "Visualize cluster assignments"
+--------------------------------------------------------------------------------------
+FP-Growth Algorithm Supermarket
+@RELATION supermarket
+
+@ATTRIBUTE Bread  {0,1}
+@ATTRIBUTE Cheese {0,1}
+@ATTRIBUTE Egg    {0,1}
+@ATTRIBUTE Juice  {0,1}
+@ATTRIBUTE Milk   {0,1}
+@ATTRIBUTE Yogurt {0,1}
+
+@DATA
+1,1,1,1,0,0  % Transaction 1: Bread, Cheese, Egg, Juice
+1,1,0,1,0,0  % Transaction 2: Bread, Cheese, Juice
+1,0,0,0,1,1  % Transaction 3: Bread, Milk, Yogurt
+1,0,0,1,1,0  % Transaction 4: Bread, Juice, Milk
+0,1,0,1,1,0  % Transaction 5: Cheese, Juice, Milk
+
+---------------------------------------------------------------------------------------
+Decision Tree Analysis Gender
+@RELATION gender_pred
+
+@ATTRIBUTE height NUMERIC
+@ATTRIBUTE weight NUMERIC
+@ATTRIBUTE gender {Male,Female}
+
+@DATA
+185,85,Male
+175,75,Female
+182,82,Male
+168,68,Female
+190,90,Male
+170,70,Female
+
+-----------------------------------------------------------------------------
+Association Rule Mining (Apriori and FP-Growth) ABCDE
+
+@RELATION transactions
+@ATTRIBUTE items {a,b,c,d,e}
+@DATA
+{a,d,e}
+{a,b,c,e}
+{a,b,d,e}
+{a,c,d,e}
+{b,c,e}
+{b,d,e}
+{c,d}
+{a,b,c}
+{a,d,e}
+{a,b,e}
+
+-----------------------------------------------------------------------
+Transaction Analysis (M,O,N,K,E,Y)
+
+@relation transactions
+
+@attribute M {0,1}
+@attribute O {0,1}
+@attribute N {0,1}
+@attribute K {0,1}
+@attribute E {0,1}
+@attribute Y {0,1}
+@attribute D {0,1}
+@attribute A {0,1}
+@attribute U {0,1}
+@attribute C {0,1}
+@attribute I {0,1}
+
+@data
+1,1,1,1,1,1,0,0,0,0,0  % T1 (M, O, N, K, E, Y)
+0,1,1,1,1,1,1,0,0,0,0  % T2 (D, O, N, K, E, Y)
+1,0,0,1,1,0,0,1,0,0,0  % T3 (M, A, K, E)
+1,0,0,1,0,1,0,0,1,1,0  % T4 (M, U, C, K, Y)
+0,1,0,1,1,0,0,0,0,1,1  % T5 (C, O, O, K, I, E)
+
+
+-----------------------------------------------------------------------
+Hot Dogs Transaction Analysis
+
+@RELATION supermarket
+@ATTRIBUTE items {Hot_Dogs,Buns,Ketchup,Coke,Chips}
+@DATA
+Hot_Dogs,Buns,Ketchup
+Hot_Dogs,Buns
+Hot_Dogs,Coke,Chips
+Chips,Coke
+Chips,Ketchup
+Hot_Dogs,Coke,Chips
+
+---------------------------------------------------------------------------------------
+#1 Create an ARFF file for the given transaction table and implement Apriori and FP-Growth algorithms with min support=2 and confidence=50%, then compare the rules.
+
+@RELATION transactions
+
+@ATTRIBUTE items {SONY,BPL,LG,SAMSUNG,ONIDA}
+
+@DATA
+SONY,BPL,LG
+BPL,SAMSUNG
+BPL,ONIDA
+SONY,BPL,SAMSUNG
+SONY,ONIDA
+BPL,ONIDA
+SONY,ONIDA
+SONY,BPL,ONIDA,LG
+SONY,BPL,ONIDA
+
+---------------------------------------------------------------------
+#9 Create ARFF file and compare Naive Bayes with Decision Tree.
+@RELATION PlayTennis
+
+@ATTRIBUTE Outlook {Sunny,Overcast,Rain}
+@ATTRIBUTE Temperature {Hot,Mild,Cool}
+@ATTRIBUTE Humidity {High,Normal}
+@ATTRIBUTE Wind {Weak,Strong}
+@ATTRIBUTE PlayTennis {Yes,No}
+
+@DATA
+Sunny,Hot,High,Weak,No
+Sunny,Hot,High,Strong,No
+Overcast,Hot,High,Weak,Yes
+Rain,Mild,High,Weak,Yes
+Rain,Cool,Normal,Weak,Yes
+Rain,Cool,Normal,Strong,No
+Overcast,Cool,Normal,Strong,Yes
+Sunny,Mild,High,Weak,No
+Sunny,Cool,Normal,Weak,Yes
+Rain,Mild,Normal,Weak,Yes
+Sunny,Mild,Normal,Strong,Yes
+Overcast,Mild,High,Strong,Yes
+Overcast,Hot,Normal,Weak,Yes
+Rain,Mild,High,Strong,No
+
+--------------------------------------------------------------------------
