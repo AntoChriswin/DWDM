@@ -408,3 +408,182 @@ age_groups <- cut(diabetes$Age, breaks = seq(20, 80, by = 10), right = FALSE)
 barplot(tapply(diabetes$BloodPressure, age_groups, mean), col = "lightgreen",
         main = "Average Blood Pressure by Age Group", xlab = "Age Group",
         ylab = "Average Blood Pressure")
+
+
+#-------------------------------------------------------------------------------------------------------------------- 
+
+# diabetes question
+# Load necessary library
+library(ggplot2)
+
+# Read the diabetes dataset
+setwd("C:/Users/antoc/OneDrive/Desktop/dwdm capestoone/dwdm r")
+diabetes <- read.csv("diabetes.csv")
+
+# Scatterplot: Age vs Blood Pressure
+ggplot(diabetes, aes(x = Age, y = BloodPressure)) +
+  geom_point(color = "blue", alpha = 0.6) +
+  labs(title = "Scatterplot of Blood Pressure vs Age",
+       x = "Age",
+       y = "Blood Pressure") +
+  theme_minimal()
+
+# Create Age groups for bar chart
+diabetes$AgeGroup <- cut(diabetes$Age, breaks = seq(20, 80, by = 10), right = FALSE)
+
+# Bar chart: Average Blood Pressure by Age Group
+bp_avg <- aggregate(BloodPressure ~ AgeGroup, data = diabetes, mean)
+
+ggplot(bp_avg, aes(x = AgeGroup, y = BloodPressure, fill = AgeGroup)) +
+  geom_bar(stat = "identity", color = "black") +
+  labs(title = "Average Blood Pressure by Age Group",
+       x = "Age Group",
+       y = "Average Blood Pressure") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+diabetes.csv
+Age,BloodPressure,Glucose,Insulin,BMI
+25,80,100,15,22.5
+35,85,120,20,24.8
+45,90,140,25,26.1
+55,95,160,30,27.4
+65,100,180,35,28.9
+
+#-------------------------------------------------------------------------------------------------------------------- 
+
+# breast cancer
+# Load necessary library
+library(ggplot2)
+
+# Create a sample dataset
+set.seed(123)  # For reproducibility
+breast_cancer <- data.frame(
+  Age = sample(20:80, 50, replace = TRUE),  # Age between 20 to 80
+  TumorSize = sample(1:10, 50, replace = TRUE),  # Tumor size (1-10 cm)
+  V_Nodes = sample(0:15, 50, replace = TRUE)  # Affected lymph nodes (0-15)
+)
+
+# View first few rows
+head(breast_cancer)
+
+# Histogram of Age Distribution
+ggplot(breast_cancer, aes(x = Age)) +
+  geom_histogram(binwidth = 10, fill = "blue", color = "black", alpha = 0.7) +
+  labs(title = "Age Distribution of Breast Cancer Patients",
+       x = "Age",
+       y = "Count") +
+  theme_minimal()
+
+# Scatter Plot of Tumor Size vs Age
+ggplot(breast_cancer, aes(x = Age, y = TumorSize)) +
+  geom_point(color = "red", size = 3, alpha = 0.6) +
+  labs(title = "Scatter Plot of Tumor Size vs Age",
+       x = "Age",
+       y = "Tumor Size (cm)") +
+  theme_minimal()
+
+# Box Plot of Tumor Size by Age Groups
+breast_cancer$AgeGroup <- cut(breast_cancer$Age, breaks = seq(20, 80, by = 10), right = FALSE)
+
+ggplot(breast_cancer, aes(x = AgeGroup, y = TumorSize, fill = AgeGroup)) +
+  geom_boxplot() +
+  labs(title = "Boxplot of Tumor Size by Age Group",
+       x = "Age Group",
+       y = "Tumor Size (cm)") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+#-------------------------------------------------------------------------------------------------------------------- 
+
+# (cricket) Perform different normalizations on strike rates: 100, 70, 60, 90, 90.(z-score with mean absolute deviation)
+strike_rates <- c(100, 70, 60, 90, 90)
+
+# (a) Min-Max normalization
+min_max <- function(x) {
+  (x - min(x)) / (max(x) - min(x))
+}
+min_max_norm <- min_max(strike_rates)
+
+# (b) z-score normalization
+z_score_norm <- scale(strike_rates)
+
+# (c) z-score with mean absolute deviation
+mad <- mean(abs(strike_rates - mean(strike_rates)))
+mad_norm <- (strike_rates - mean(strike_rates)) / mad
+
+# (d) decimal scaling
+decimal_scale <- function(x) {
+  x / (10^ceiling(log10(max(abs(x)))))
+}
+decimal_norm <- decimal_scale(strike_rates)
+
+results <- data.frame(
+  Original = strike_rates,
+  MinMax = min_max_norm,
+  ZScore = z_score_norm,
+  ZScore_MAD = mad_norm,
+  Decimal = decimal_norm
+)
+print(results)
+
+#-------------------------------------------------------------------------------------------------------------------- 
+
+#Vegetarians yes or no
+# Create a data frame with person names and vegetarian status
+persons <- data.frame(
+  Name = c("Gopu", "Babu", "Baby", "Gopal", "Krishna", "Jai", "Dev", "Malini", "Hema", "Anu"),
+  Vegetarian = c("yes", "yes", "yes", "no", "yes", "no", "no", "yes", "yes", "yes")
+)
+
+# Count the number of vegetarians and non-vegetarians
+veg_count <- sum(persons$Vegetarian == "yes")
+non_veg_count <- sum(persons$Vegetarian == "no")
+
+# Print the results
+cat("Number of Vegetarians:", veg_count, "\n")
+cat("Number of Non-Vegetarians:", non_veg_count, "\n")
+
+# Find which type is greater
+if (veg_count > non_veg_count) {
+  cat("Vegetarians are greater in number.\n")
+} else if (veg_count < non_veg_count) {
+  cat("Non-Vegetarians are greater in number.\n")
+} else {
+  cat("Both have equal numbers.\n")
+}
+
+#-------------------------------------------------------------------------------------------------------------------- 
+
+
+# Create vectors for x (number of phones sold) and y (money earned)
+x <- c(4, 1, 5, 7, 10, 2, 50, 25, 90, 36)
+y <- c(12, 5, 13, 19, 31, 7, 153, 72, 275, 110)
+
+# Create a scatter plot
+plot(x, y, main = "Scatter Plot of Mobile Phones Sold vs. Money Earned",
+     xlab = "Number of Mobile Phones Sold", ylab = "Money Earned",
+     col = "blue", pch = 16)
+
+# Add a trend line (optional)
+abline(lm(y ~ x), col = "red", lwd = 2)
+
+##-------------------------------------------------------------------------------------------------------------------- 
+
+# Partition 12 sales prices (5,10,11,13,15,35,50,55,72,92,204,215) into bins.
+prices <- c(5,10,11,13,15,35,50,55,72,92,204,215)
+
+# (a) Equal-frequency (3 bins)
+bin_ef <- cut(prices, breaks=3, labels=c("Low","Medium","High"))
+
+# (b) Equal-width
+bin_ew <- cut(prices, breaks=seq(min(prices), max(prices), length.out=4), 
+              labels=c("Low","Medium","High"))
+
+# (c) Clustering
+kmeans_result <- kmeans(matrix(prices, ncol=1), centers=3)
+bin_cluster <- factor(kmeans_result$cluster)
+
+results <- data.frame(Price=prices, EqualFreq=bin_ef, 
+                      EqualWidth=bin_ew, Cluster=bin_cluster)
+print(results)
